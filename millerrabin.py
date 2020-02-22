@@ -35,7 +35,7 @@ def primeTest(p, k):
             if x == 1:
                 return False
             if x == p - 1:
-                return True
+                break
 
         if x != p - 1:
             return False
