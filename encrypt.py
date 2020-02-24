@@ -1,6 +1,7 @@
 # public key encryption
 
 import random
+import keygen
 
 def blockEncrypt(block, pubkey):
     """
@@ -8,11 +9,19 @@ def blockEncrypt(block, pubkey):
     :param pubkey: dictionary [p: 0, g: 0, eTwo: 0] of the public key
     :return: tuple of ciphertext integers
     """
+    p = pubkey['p']
+    g = pubkey['g']
+    e = pubkey['eTwo']
 
     # get random k
     k = random.randint(0, pubkey['p'] - 1)
-    cOne = (pubkey['g'] ** k) % pubkey['p']
-    cTwo = ((pubkey['eTwo'] ** k) * block) % pubkey['p']
+
+    cOne = pow(g, k, p)
+
+    # ab mod m = (a mod m * b mod m ) mod m
+    a = pow(e, k, p)
+    b = block % p
+    cTwo = (a * b) % p
 
     # cOne, Ctwo two ints
     ciphertext = (cOne, cTwo)
@@ -20,16 +29,17 @@ def blockEncrypt(block, pubkey):
     return ciphertext
 
 
-def encrypt():
+def encrypt(input):
     """
-    :param: input string in ASCII
+    :param input: input string in ASCII
     :return: ciphertext, list of int tuples
+    :return: dictionary of pubkeys
+    :return: private key d
     """
 
-    pubkeys = {'p': 1, 'g': 1, 'eTwo': 1}
+    pubkeys, d = keygen.keygen()
 
-    # need 31 bit blocks. high bit of ASCII is always 0
-    ‭# get 4 bytes, 4 char blocks
+    # get 4 bytes, 4 char blocks. high bit of ascii always 0
 
     # check if padding is needed
     if (len(input) % 4) != 0:
@@ -54,4 +64,4 @@ def encrypt():
         c = blockEncrypt(intBlock, pubkeys)
         ciphertext.append(c)
 
-    return ciphertext
+    return ciphertext, pubkeys, d

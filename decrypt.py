@@ -12,22 +12,28 @@ def blockDecrypt(cpair, keys):
     p = keys['p']
     d = keys['d']
 
-    cOneModP = (cOne ** (p - 1 - d)) % p
+    cOneModP = pow(cOne, (p-1-d), p)
     cTwoModP = cTwo % p
     m = (cOneModP * cTwoModP) % p
 
     return m
 
 
-def decrypt():
+def decrypt(ciphertext, keys):
     """
-    :param:
-    :return:
+    :param ciphertext: list of int tuples
+    :param keys: dictionary {'p':0, 'd':0}
+    :return: ascii string of plaintext
     """
 
-    # decrypt one block
-    m = blockDecrypt()
+    plaintext = ''
+    for block in ciphertext:
+        # decrypt one block
+        m = blockDecrypt(block, keys)
 
-    # convert integer block m to ascii 
+        # convert integer block m to ascii
+        hexBlock = hex(m)[2:]
+        text = bytes.fromhex(hexBlock).decode("ASCII")
+        plaintext = plaintext + text
 
-    pass
+    return plaintext
