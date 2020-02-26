@@ -2,6 +2,7 @@
 
 import random
 import keygen
+import utils
 
 def blockEncrypt(block, pubkey):
     """
@@ -29,28 +30,28 @@ def blockEncrypt(block, pubkey):
     return ciphertext
 
 
-def encrypt(input):
+def encrypt(plaintext, pubkeys):
     """
-    :param input: input string in ASCII
+    :param plaintext: input string in ASCII
     :return: ciphertext, list of int tuples
     :return: dictionary of pubkeys
-    :return: private key d
     """
 
-    pubkeys, d = keygen.keygen()
+    #pubkeys, d = keygen.keygen()
 
     # get 4 bytes, 4 char blocks. high bit of ascii always 0
 
     # check if padding is needed
-    if (len(input) % 4) != 0:
+    if (len(plaintext) % 4) != 0:
         print("adding padding to input")
-        print(input)
-        r = len(input) % 4
+        print(plaintext)
+        r = len(plaintext) % 4
         for i in range(0,4-r):
-            input = input + ' '
+            plaintext = plaintext + '.'
 
     # split into list of 32 bit strings
-    blocks = [input[i:i+4] for i in range(0, len(input), 4)]
+    blocks = [plaintext[i:i+4] for i in range(0, len(plaintext), 4)]
+    print(blocks)
 
     ciphertext = []         # will be list of int tuples
 
@@ -61,7 +62,12 @@ def encrypt(input):
         hexBlock = ''.join([ "{:02x}".format(ord(k)) for k in blocks[i] ])
         intBlock = int(hexBlock, 16)
 
+        if utils.getNumBits(intBlock) < 31:
+            print("less than 31 bits")
+
+        print(intBlock)
+
         c = blockEncrypt(intBlock, pubkeys)
         ciphertext.append(c)
 
-    return ciphertext, pubkeys, d
+    return ciphertext

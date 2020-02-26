@@ -7,6 +7,7 @@ def blockDecrypt(cpair, keys):
     :return: one block of plaintext integer form
     """
 
+    print("\n\n", cpair, "\n\n")
     cOne = cpair[0]
     cTwo = cpair[1]
     p = keys['p']
@@ -33,6 +34,7 @@ def decrypt(ciphertext, keys):
 
         # convert integer block m to ascii
         hexBlock = hex(m)[2:]
+        print("\n",hexBlock)
         text = bytes.fromhex(hexBlock).decode("ASCII")
         plaintext = plaintext + text
 
