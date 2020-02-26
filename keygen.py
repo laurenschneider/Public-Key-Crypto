@@ -29,13 +29,13 @@ def keygen():
     """
 
     sd = input("Please enter a seed: ")
-    random.seed(sd)
+    random.seed(55)
 
     # get large prime
     p = genSafePrime(32)
 
     # 1 <= d <= p-2
-    d = random.randint(1, p-2)
+    d = random.randint(1, p)
     eOne = random.randint(1, p-1)
     eTwo = pow(eOne, d, p)
 

@@ -51,7 +51,6 @@ def encrypt(plaintext, pubkeys):
 
     # split into list of 32 bit strings
     blocks = [plaintext[i:i+4] for i in range(0, len(plaintext), 4)]
-    print(blocks)
 
     ciphertext = []         # will be list of int tuples
 
@@ -61,11 +60,6 @@ def encrypt(plaintext, pubkeys):
         # format first block to int
         hexBlock = ''.join([ "{:02x}".format(ord(k)) for k in blocks[i] ])
         intBlock = int(hexBlock, 16)
-
-        if utils.getNumBits(intBlock) < 31:
-            print("less than 31 bits")
-
-        print(intBlock)
 
         c = blockEncrypt(intBlock, pubkeys)
         ciphertext.append(c)

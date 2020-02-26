@@ -6,6 +6,7 @@ import decrypt
 # prompt user to choose
 done = False
 encrypted = False
+ciphertext = []
 pubkey = {}
 
 while not done:
@@ -48,6 +49,8 @@ while not done:
             pFile = open("plaintextResult.txt", "w")
             pFile.write(plain)
             pFile.close()
+
+            print(plain)
 
     elif res == "4":
         done = True
