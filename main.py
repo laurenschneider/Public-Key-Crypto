@@ -25,7 +25,10 @@ while not done:
             plaintext = pFile.read()
             pFile.close()
 
-            ciphertext = encrypt.encrypt(plaintext, pubkey)
+            res = plaintext.split('\n')
+            newplain = res[0]
+
+            ciphertext = encrypt.encrypt(newplain, pubkey)
 
             cFile = open("ciphertext.txt", "w")
             cFile.write(str(ciphertext))
