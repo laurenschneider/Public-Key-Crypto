@@ -28,9 +28,9 @@ def keygen():
     :return: private key d
     """
 
-    print("\n\nPlease enter a seed number:\n\n")
+    sd = input("\n\nPlease enter a seed number:\n\n")
 
-    random.seed(3)
+    random.seed(int(sd))
 
     # get large prime
     p = genSafePrime(32)
