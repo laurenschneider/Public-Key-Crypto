@@ -14,7 +14,9 @@ def genSafePrime(kBits):
         q = 2
         while not q % 12 == 5:
             print("finding prime q")
-            q = random.getrandbits(kBits-1)
+            # lowest 31 bit int: 1073741824
+            # highest 31 bit int: 2147483647
+            q = random.randint(1073741824,2147483647)
 
         p = 2*q + 1
         if millerrabin.primeTest(p, 128) == True:
@@ -29,14 +31,14 @@ def keygen():
     """
 
     sd = input("Please enter a seed: ")
-    random.seed(55)
+    random.seed(int(sd))
 
     # get large prime
     p = genSafePrime(32)
 
     # 1 <= d <= p-2
-    d = random.randint(1, p)
-    eOne = random.randint(1, p-1)
+    d = random.randint(1, p-2)
+    eOne = 2
     eTwo = pow(eOne, d, p)
 
     pubkey = {'p': p, 'g': eOne, 'eTwo': eTwo}
