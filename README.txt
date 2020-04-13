@@ -1,7 +1,7 @@
 Lauren Schneider
 braun@pdx.edu
 
-Public-Key-Crypto is an implementation of a public key encryption scheme.
+Public-Key-Crypto is an implementation of a public key encryption scheme very similar to ElGamal.
 
 To run this program:
 Enter your message on one continuous line in a file called
